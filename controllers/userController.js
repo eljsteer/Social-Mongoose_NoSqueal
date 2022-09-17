@@ -10,6 +10,7 @@ module.exports = {
 // >>-------------------------->>
 // User Controller Queries
 // >>-------------------------->>
+// Get all Users
   getUsers(req, res) {
     User.find()
       .then(async (Users) => {
