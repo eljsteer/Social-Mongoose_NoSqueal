@@ -6,11 +6,13 @@ const ThoughtSchema = new Schema(
     thoughtText: {
       type: String,
       required: true,
-      unique: true,
+      minlength:1,
+      maxlength: 280,
     },
     createdAt: {
       type: Date,
       detault: Date.now(),
+      get: (createdAtTime) => dayJs(createdAtTime).format('DD/MM/YYYY'),
     },
     username: {
       type: String,
@@ -22,6 +24,7 @@ const ThoughtSchema = new Schema(
       getters: true,
       virtual: true,
     },
+    id: false
   }
 );
 

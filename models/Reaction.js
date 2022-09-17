@@ -10,7 +10,7 @@ const ReactionSchema = new Schema(
     reactionBody: {
       type: String,
       required: true,
-      maxlength: 250,
+      maxlength: 280,
     },
     username: {
       type: String,
@@ -19,7 +19,7 @@ const ReactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now(),
-      // get: dayJs().format('DD/MM/YYYY'),
+      get: (createdAtTime) => dayJs(createdAtTime).format('DD/MM/YYYY'),
     }
   }, {
     toJSON: {

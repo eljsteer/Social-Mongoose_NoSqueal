@@ -43,14 +43,32 @@ module.exports = {
       });
   },
 
-  // create a new user
+// create a new user
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
 
-  // Delete a user and delete them from the course
+// Update a User
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with this id!' })
+          : res.json(user)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+
+// Delete a user and delete them from the course
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
       .then((user) =>
