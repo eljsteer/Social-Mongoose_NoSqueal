@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongoose').Types;
+// const { ObjectId } = require('mongoose').Types;
 const { User, Thought } = require('../models');
 
 const friendCount = async () =>
@@ -7,6 +7,9 @@ const friendCount = async () =>
     .then((numberOfFriends) => numberOfFriends);
 
 module.exports = {
+// >>-------------------------->>
+// User Controller Queries
+// >>-------------------------->>
   getUsers(req, res) {
     User.find()
       .then(async (Users) => {
@@ -21,7 +24,6 @@ module.exports = {
         return res.status(500).json(err);
       });
   },
-
 
   // Get a single user
   getSingleUser(req, res) {
@@ -73,13 +75,17 @@ module.exports = {
       });
   },
 
-  // Add an assignment to a user
-  addThought(req, res) {
-    console.log('You are adding an thougt');
+// >>-------------------------->>
+// Friend Controller Queries
+// >>-------------------------->>
+
+  // Add an Friend to a user
+  addFriend(req, res) {
+    console.log('You are adding an Friend');
     console.log(req.body);
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { thoughts: req.body } },
+      { $addToSet: { friends: req.body } },
       { runValidators: true, new: true }
     )
       .then((user) =>
@@ -91,11 +97,11 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // Remove assignment from a user
-  deleteThought(req, res) {
+  // Remove Friend from a user
+  deleteFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { thought: { thoughtId: req.params.thoughtId } } },
+      { $pull: { friend: { friendId: req.params.friendId } } },
       { runValidators: true, new: true }
     )
       .then((user) =>

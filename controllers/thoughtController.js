@@ -1,6 +1,10 @@
 const { Thought, User } = require('../models');
 
 module.exports = {
+
+  // >>-------------------------->>
+  // Thought Controller Queries
+  // >>-------------------------->>
   // Get all thoughts
   getThoughts(req, res) {
     Thought.find()
@@ -57,6 +61,9 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   
+  // >>-------------------------->>
+  // Reaction Controller Queries
+  // >>-------------------------->>
   // Add an reaction to a thought
   addReaction(req, res) {
     console.log('You are adding an reaction');
