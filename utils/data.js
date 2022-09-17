@@ -118,12 +118,17 @@ const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const getRandomUsername = (names) => {
     const name1 = getRandomArrItem(names);
     const name2 = getRandomArrItem(names);
+
+    console.log(name1, name2)
+
     return `${name1} ${name2}`;
   };
   // creates a random email
   const getRandomEmail = (names) => {
     const name1 = getRandomUsername.name1;
     const name2 = getRandomUsername.name2;
+
+    console.log(name1, name2)
 
     return `${name1}${name2}@gmail.com`;
   };
