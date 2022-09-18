@@ -14,11 +14,9 @@ module.exports = {
   getUsers(req, res) {
     User.find()
       .select("-__v")
-      // .populate({ thoughts: req.params.userId })
       .then(async (Users) => {
         const userObj = {
           Users,
-          // "$match": {thoughts: await Thought(req.params.userId)},
         };
         return res.json(userObj);
       })
@@ -32,12 +30,13 @@ module.exports = {
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select("-__v")
+      .populate({path: "thoughts"})
+      .populate("friends")
       .then(async (user) =>
         !user
           ? res.status(404).json({ message: "No user with that ID" })
           : res.json({
               user,
-              // thoughts: await Thought(req.params.userId),
             })
       )
       .catch((err) => {
@@ -77,9 +76,9 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: "No such user exists" })
-          : Thought.findOneAndUpdate(
-              { Users: req.params.userId },
-              { $pull: { Users: req.params.userId } },
+          : Thought.findOneAndRemove(
+              { User: req.params.userId },
+              { $pull: { User: req.params.userId } },
               { new: true }
             )
       )

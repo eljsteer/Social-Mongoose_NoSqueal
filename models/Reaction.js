@@ -3,7 +3,7 @@ const dayJs = require('dayjs')
 
 const ReactionSchema = new Schema(
   {
-    reactonID: {
+    reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
@@ -19,7 +19,7 @@ const ReactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now(),
-      get: (createdAtTime) => dayJs(createdAtTime).format('DD/MM/YYYY'),
+      get: (createdAtTime) => dayJs(createdAtTime).format('DD/MM/YYYY-hh:mm'),
     }
   }, {
     toJSON: {

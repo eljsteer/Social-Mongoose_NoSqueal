@@ -8,6 +8,7 @@ module.exports = {
   // Get all thoughts
   getThoughts(req, res) {
     Thought.find()
+      .select("-__v")
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
@@ -35,7 +36,7 @@ module.exports = {
         { new: true }
       )
     })
-      .then((Thought) => res.json(Thought))
+      .then((thoughtInfo) => res.json(thoughtInfo))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -60,10 +61,16 @@ module.exports = {
   // Delete a Thought
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
-      .then((Thought) =>
-        !Thought
+    .then(thoughtData => {
+      User.findOneAndDelete(      
+        { _id: thoughtData.userId },
+        { $pull: { thoughts: { _id: req.params.thoughtId } } },
+        { runValidators: true, new: true })
+      })
+      .then((thoughtData) => 
+        !thoughtData
           ? res.status(404).json({ message: 'No Thought with that ID' })
-          : User.deleteMany({ _id: { $in: Thought.Users } })
+          : User.deleteOne({ _id: { $in: User.thoughts } })
       )
       .then(() => res.json({ message: 'Thought and reactions deleted!' }))
       .catch((err) => res.status(500).json(err));
@@ -75,7 +82,6 @@ module.exports = {
   // Add an reaction to a thought
   addReaction(req, res) {
     console.log('You are adding an reaction');
-    console.log(req.body);
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
@@ -90,11 +96,12 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
   // Remove reaction from a thought
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reaction: { reactionId: req.params.reactionId } } },
+      { $pull: { reactions: { _id: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
       .then((thought) =>
