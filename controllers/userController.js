@@ -13,16 +13,10 @@ module.exports = {
 // Get all Users
   getUsers(req, res) {
     User.find({})
-      .populate({path: "thoughts"})
-      .populate({path: "friends"})
+      .populate({path: "thoughts", select: "-__v"})
+      .populate({path: "friends", select: "-__v"})
       .select("-__v")
-      // .then(async (Users) => {
-      //   const userObj = {
-      //     Users,
-      //   };
-      //   return res.json(userObj);
-      // })
-      .then(UserData => res.json(UserData))
+      .then(userData => res.json(userData))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -33,13 +27,13 @@ module.exports = {
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select("-__v")
-      .populate({path: "thoughts"})
-      .populate("friends")
-      .then(async (user) =>
-        !user
+      .populate({path: "thoughts", select: "-__v"})
+      .populate({path: "friends", select: "-__v"})
+      .then(async (userData) =>
+        !userData
           ? res.status(404).json({ message: "No user with that ID" })
           : res.json({
-              user,
+              userData,
             })
       )
       .catch((err) => {
