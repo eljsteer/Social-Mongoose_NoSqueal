@@ -12,14 +12,17 @@ module.exports = {
 // >>-------------------------->>
 // Get all Users
   getUsers(req, res) {
-    User.find()
+    User.find({})
+      .populate({path: "thoughts"})
+      .populate({path: "friends"})
       .select("-__v")
-      .then(async (Users) => {
-        const userObj = {
-          Users,
-        };
-        return res.json(userObj);
-      })
+      // .then(async (Users) => {
+      //   const userObj = {
+      //     Users,
+      //   };
+      //   return res.json(userObj);
+      // })
+      .then(UserData => res.json(UserData))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -73,15 +76,18 @@ module.exports = {
 // Delete a user and delete them from the course
   deleteUser(req, res) {
     User.findOneAndRemove({ _id: req.params.userId })
-      .then((user) =>
-        !user
-          ? res.status(404).json({ message: "No such user exists" })
-          : Thought.findOneAndRemove(
-              { User: req.params.userId },
-              { $pull: { User: req.params.userId } },
-              { new: true }
-            )
+      .then((dbUserData) => {
+        if(!dbUserData) {
+          return res.status(404).json({ message: "No such user exists" })
+        }
+
+  // Delete Thoughts that related to User
+      return Thought.deleteMany(
+        { thoughts: dbUserData.thoughts },
+        { $pull: { thoughts: dbUserData.thoughtId } },
+        { new: true }
       )
+      })
       .then((thought) =>
         !thought
           ? res.status(404).json({
@@ -98,7 +104,6 @@ module.exports = {
 // >>-------------------------->>
 // Friend Controller Queries
 // >>-------------------------->>
-
   // Add an Friend to a user
   addFriend(req, res) {
     console.log("You are adding a Friend");
@@ -134,5 +139,5 @@ module.exports = {
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
-  },
+  }
 }
