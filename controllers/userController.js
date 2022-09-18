@@ -77,9 +77,7 @@ module.exports = {
 
   // Delete Thoughts that related to User
       return Thought.deleteMany(
-        { thoughts: dbUserData.thoughts },
-        { $pull: { thoughts: dbUserData.thoughtId } },
-        { new: true }
+        { _id: { $in: dbUserData.thoughts } },
       )
       })
       .then((thought) =>
