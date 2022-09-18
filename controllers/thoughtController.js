@@ -15,6 +15,7 @@ module.exports = {
   // Get a Thought
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
+      .populate({path: "reactions"})
       .select('-__v')
       .then((Thought) =>
         !Thought
@@ -27,6 +28,13 @@ module.exports = {
   // Create a Thought
   createThought(req, res) {
     Thought.create(req.body)
+    .then(thoughtInfo => {
+      return User.findOneAndUpdate( 
+        {_id: req.params.userId },
+        { $push: { thoughts: thoughtInfo._id } },
+        { new: true }
+      )
+    })
       .then((Thought) => res.json(Thought))
       .catch((err) => {
         console.log(err);
@@ -57,7 +65,7 @@ module.exports = {
           ? res.status(404).json({ message: 'No Thought with that ID' })
           : User.deleteMany({ _id: { $in: Thought.Users } })
       )
-      .then(() => res.json({ message: 'Thought and Users deleted!' }))
+      .then(() => res.json({ message: 'Thought and reactions deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   

@@ -14,7 +14,7 @@ module.exports = {
   getUsers(req, res) {
     User.find()
       .select("-__v")
-      .populate("thoughts", "reactions")
+      // .populate({ thoughts: req.params.userId })
       .then(async (Users) => {
         const userObj = {
           Users,
