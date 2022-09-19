@@ -1,78 +1,78 @@
-// const names = [
-//   'Aaran',
-//   'Aaren',
-//   'Aarez',
-//   'Aarman',
-//   'Aaron',
-//   'Aaron-James',
-//   'Aarron',
-//   'Aaryan',
-//   'Aaryn',
-//   'Aayan',
-//   'Aazaan',
-//   'Abaan',
-//   'Abbas',
-//   'Abdallah',
-//   'Abdalroof',
-//   'Abdihakim',
-//   'Abdirahman',
-//   'Abdisalam',
-//   'Abdul',
-//   'Abdul-Aziz',
-//   'Abdulbasir',
-//   'Abdulkadir',
-//   'Abdulkarem',
-//   'Smith',
-//   'Jones',
-//   'Matthew',
-//   'Andrew',
-//   'Ze',
-//   'Zechariah',
-//   'Zeek',
-//   'Zeeshan',
-//   'Zeid',
-//   'Zein',
-//   'Zen',
-//   'Zendel',
-//   'Zenith',
-//   'Zennon',
-//   'Zeph',
-//   'Zerah',
-//   'Zhen',
-//   'Zhi',
-//   'Zhong',
-//   'Zhuo',
-//   'Zi',
-//   'Zidane',
-//   'Zijie',
-//   'Zinedine',
-//   'Zion',
-//   'Zishan',
-//   'Ziya',
-//   'Ziyaan',
-//   'Zohaib',
-//   'Zohair',
-//   'Zoubaeir',
-//   'Zubair',
-//   'Zubayr',
-//   'Zuriel',
-//   'Xander',
-//   'Jared',
-//   'Courtney',
-//   'Gillian',
-//   'Clark',
-//   'Jared',
-//   'Grace',
-//   'Kelsey',
-//   'Alexi',
-//   'Alex',
-//   'Mark',
-//   'Tamar',
-//   'Farish',
-//   'Robert',
-//   'Nathaniel',
-//   'Parker',
-// ];
+const names = [
+  'Aaran',
+  'Aaren',
+  'Aarez',
+  'Aarman',
+  'Aaron',
+  'Aaron-James',
+  'Aarron',
+  'Aaryan',
+  'Aaryn',
+  'Aayan',
+  'Aazaan',
+  'Abaan',
+  'Abbas',
+  'Abdallah',
+  'Abdalroof',
+  'Abdihakim',
+  'Abdirahman',
+  'Abdisalam',
+  'Abdul',
+  'Abdul-Aziz',
+  'Abdulbasir',
+  'Abdulkadir',
+  'Abdulkarem',
+  'Smith',
+  'Jones',
+  'Matthew',
+  'Andrew',
+  'Ze',
+  'Zechariah',
+  'Zeek',
+  'Zeeshan',
+  'Zeid',
+  'Zein',
+  'Zen',
+  'Zendel',
+  'Zenith',
+  'Zennon',
+  'Zeph',
+  'Zerah',
+  'Zhen',
+  'Zhi',
+  'Zhong',
+  'Zhuo',
+  'Zi',
+  'Zidane',
+  'Zijie',
+  'Zinedine',
+  'Zion',
+  'Zishan',
+  'Ziya',
+  'Ziyaan',
+  'Zohaib',
+  'Zohair',
+  'Zoubaeir',
+  'Zubair',
+  'Zubayr',
+  'Zuriel',
+  'Xander',
+  'Jared',
+  'Courtney',
+  'Gillian',
+  'Clark',
+  'Jared',
+  'Grace',
+  'Kelsey',
+  'Alexi',
+  'Alex',
+  'Mark',
+  'Tamar',
+  'Farish',
+  'Robert',
+  'Nathaniel',
+  'Parker',
+];
 
 // const thoughts = [
 //   'This is the Best Decision Tracker',
@@ -94,54 +94,34 @@
 //   'Poker, a good game, but try not to Poke her',
 // ];
 
-// const reactions = [
-//   "Too Easy, keep it coming",
-//   "Nah, I don't agree, not for me thanks",
-//   "🤌",
-//   "That's cool, go you",
-//   "🤙🤙🤙",
-//   "I loooove That",
-//   "👍",
-//   "Yea, Naah",
-//   "Wooohooo",
-//   "inspiring thoughts from your headmeat",
-//   "😍",
-//   "Encore, Bravo bravo",
-//   "😀",
-//   "👏",
-// ];
+// Get a random item given an array
 
-// // Get a random item given an array
-// const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// // Gets a random full name
-//   const getRandomUsername = () => {
-//     const name1 = getRandomArrItem(names);
-//     const name2 = getRandomArrItem(names);
-//     console.log(name1, name2)
-//     `${name1} ${name2}`;
-//   }
+class RandomUser {
+  constructor () {
+  this.name1 = this.getRandomArrItem(names);
+  this.name2 = this.getRandomArrItem(names);
+  }
 
-//   // creates a random email
-//   const getRandomEmail = (names) => {
-//     const name1 = getRandomUsername.name1;
-//     const name2 = getRandomUsername.name2;
+  getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-//     console.log(name1, name2)
 
-//     return `${name1}${name2}@gmail.com`;
-//   };
+  // Gets a random full name
+  getRandomUsername = () => {
+    console.log(this.name1, this.name2)
+    const userName = `${name1} ${name2}`;
+    return userName;
+  }
 
-//   const getRandomThoughts = (int) => {
-//     const results = [];
-//     for (let i = 0; i < int; i++) {
-//       results.push({
-//         thoughtText: getRandomArrItem(thoughts),
-//         reactions: getRandomArrItem(reactions),
-//       });
-//     }
-//     return results;
-//   };
+  // creates a random email
+  getRandomEmail = (name1, name2) => {
 
-// // Export the functions for use in seed.js
-// module.exports = { getRandomUsername, getRandomThoughts };
+    console.log(this.name1, this.name2)
+
+    const userEmail = `${this.name1}${this.name2}@gmail.com`;
+    return userEmail;
+  };
+}
+
+// Export the functions for use in seed.js
+module.exports = { RandomUser };
