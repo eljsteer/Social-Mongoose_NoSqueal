@@ -18,7 +18,7 @@
   ## DESCRIPTION
   This software is the API using MongoDB and Mongoose technology to build the routes and requests for a generic social media platform. Ready to pick up and utilise in your own Social Media Application that you're building. 
 
-  [Github Link to Source Code](https://github.com/eljsteer/Social-Mongoose_NoSqueal)
+  <!-- [Github Link to Source Code](https://github.com/eljsteer/Social-Mongoose_NoSqueal) -->
   
   ## INSTALLATION
   1. Install NodeJS here: [Download NodeJS](https://nodejs.org/en/download/)
